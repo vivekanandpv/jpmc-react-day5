@@ -10,10 +10,18 @@ const Counter = (props) => {
   return (
     <>
       <h4>Counter: {count}</h4>
-      <button className='btn btn-primary mt-4 me-3' onClick={increment}>
+      <button
+        className='btn btn-primary mt-4 me-3'
+        onClick={increment}
+        data-testid='increment-button'
+      >
         Increment
       </button>
-      <button className='btn btn-primary mt-4 me-3' onClick={decrement}>
+      <button
+        className='btn btn-primary mt-4 me-3'
+        onClick={decrement}
+        data-testid='decrement-button'
+      >
         Decrement
       </button>
     </>
