@@ -8,8 +8,11 @@ const RegistrationForm = (props) => {
     defaultValues: {
       username: 'john',
       password: 'hello',
+      country: {
+        primary: 'india',
+      },
     },
-    mode: 'onSubmit',
+    mode: 'onChange',
   });
 
   const {
@@ -26,6 +29,8 @@ const RegistrationForm = (props) => {
   };
 
   const error = (e) => {
+    console.log('dirtyFields', dirtyFields);
+    console.log('touchedFields', touchedFields);
     console.log('form error', e);
   };
 
@@ -45,8 +50,12 @@ const RegistrationForm = (props) => {
             {...register('username', {
               required: 'Username is required',
               validate: {
-                myValidation: (fv) => {
-                  return fv === 'vivek' || 'Should be vivek';
+                myAsyncValidator: async (fv) => {
+                  const val = await httpService
+                    .get('users/1')
+                    .then((r) => r.data.username);
+
+                  return fv === val || `It should be ${val}`;
                 },
               },
             })}
@@ -71,6 +80,22 @@ const RegistrationForm = (props) => {
             })}
           />
           <p className='text-danger form-text'>{errors.password?.message}</p>
+        </div>
+        <div className='mb-3'>
+          <label htmlFor='primaryCountry' className='form-label'>
+            Primary Country
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            id='primaryCountry'
+            {...register('country.primary', {
+              required: 'Primary country is required',
+            })}
+          />
+          <p className='text-danger form-text'>
+            {errors.country?.primary?.message}
+          </p>
         </div>
         <button type='submit' className='btn btn-primary'>
           Submit

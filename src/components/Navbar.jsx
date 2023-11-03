@@ -42,6 +42,11 @@ const Navbar = (props) => {
                   Counter
                 </NavLink>
               </li>
+              <li className='nav-item'>
+                <NavLink to='/contact' exact className='nav-link'>
+                  Contact
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
